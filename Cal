@@ -1,0 +1,1700 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+// Tipe bentukan matrix
+typedef struct {
+  double matrix[100][100];
+
+} Matrix;
+
+// Fungsi text pembukaan
+void Message();
+
+// Fungsi operasi artimatika 
+void operation();
+
+// Fungsi faktorial
+double factorial(double n);
+
+// Fungsi mencari luas dan keliling persegi
+void resultRectangle ();
+// Fungsi berisi operasi-operasi bangun ruang dan bangun datar
+void shape();
+
+// Fungsi Konversi suhu
+void Temperature();
+
+// Fungsi konversi sebuah berat ke gram
+double convertToGrams(double weight, int choice);
+
+// Fungsi konversi gram ke sebuah berat
+double convertFromGrams(double weight);
+
+// Fungsi konversi berat
+void Weight();
+
+// Fungsi konversi sebuah panjang ke meter
+double convertToMetres(double length, int choice);
+
+// Fungsi konversi meter ke sebuah panjang
+double convertFromMetres(double length);
+
+// Fungsi konversi panjang
+void Length();
+
+// Fungsi konversi sumbu
+void Angle();
+
+// Fungsi konversi mata uang
+void currency ();
+
+// Fungsi konversi
+void conversion();
+
+// Fungsi pesan konversi
+void conversion_message();
+
+// Fungsi operasi pada matris
+void matrix();
+
+// Fungsi perkalian matrix
+Matrix matrixMultiplication(Matrix matrix1, Matrix matrix2, int rows, int colls);
+
+// Fungsi pembagian matrix
+Matrix matrixDivision(Matrix matrix1, Matrix matrix2, int rows, int colls);
+
+// Fungsi pangkat matrix
+Matrix matrixExponents(Matrix matrix1, int rows, int colls, int expo);
+
+
+int main(){
+    // variabel menerima input pilihan
+    char choice;
+
+    Message();
+
+    // Pemilihan tipe kalkulasi yang ingin dilakukan
+    while (1) {
+    printf("Enter your input: ");
+    scanf (" %c", &choice);
+
+    switch (choice){
+
+        case '1':
+            operation();
+        break;
+
+        case '2':
+            shape();
+        break;
+        
+        case '3':
+            conversion();
+        break;
+
+        case '4':
+            matrix();
+        break;
+
+        // Opsi 'q' dan 'Q' berguna untuk memberhentikan program
+        case 'q':
+        case 'Q':
+            exit(0);
+        break;
+
+        // Opsi 'h' dan 'H' berguna untuk membersihkan terminal dan kembali "home"
+        case 'h':
+        case 'H':
+            system("cls");
+            printf("\n");
+            Message();
+        break;
+
+        // Situasi default untuk pengulanan halaman "home"
+        default:
+            printf("\n");
+            Message();
+        break;
+
+    }
+    }
+    
+    return 0;
+}
+
+void Message () {
+    printf ("===============================================================================================\n");
+    printf ("                                     KALKULATOR\n");
+    printf ("===============================================================================================\n");
+    printf ("Pilih Operasi:\n1. Aritmatika\n2. Shapes\n3. Konversi Satuan\n4. Matriks\nQ. Quit\nH. Home\n");
+}
+
+
+double factorial(double num) {
+    if (num == 0 || num == 1)
+        return 1;
+    else
+        return num * factorial(num - 1);
+}
+
+void operation() {
+    printf("|| OPERASI ARITMATIKA ||\n");
+    char operator;
+    double result = 0, num;
+    int i = 0, count = 0;
+
+    // array untuk menyimpan operasi
+    double numArr[100];
+    char ops[100];
+
+    printf("Enter calculation:\n");
+
+    // Input bilangan pertama
+    if (scanf(" %lf", &numArr[0]) != 1) {
+        printf("Invalid input\n");
+        return;
+    }
+
+    // Input operasi dan pengerjaan pada operasi, pangkat, akar, limit, trigonometri, faktorial, logaritma
+    // Loop akan berjalan selaam menerima operator, dimana bukan berupa '='
+    
+    while (scanf(" %c", &operator) == 1 && operator != '=') {
+        // count untuk menghitung jumlah operator
+        count++;
+
+        // pengerjaan operator trigonometri
+        if (operator == 't') {
+            scanf(" %c", &operator);
+            switch (operator) {
+                case 's':
+                    numArr[i] = sin(numArr[i] * 3.14 / 180);
+                    break;
+                case 'c':
+                    numArr[i] = cos(numArr[i] * 3.14 / 180);
+                    break;
+                case 't':
+                    numArr[i] = tan(numArr[i] * 3.14 / 180);
+                    break;
+                case 'S':
+                    numArr[i] =  1 / cos(numArr[i] * 3.14 / 180);;
+                    break;
+                case 'C':
+                    numArr[i] = 1 / sin(numArr[i] * 3.14 / 180);
+                    break;
+                case 'T':
+                    numArr[i] = 1 / tan(numArr[i] * 3.14 / 180);
+                    break;
+                default:
+                    printf("Invalid");
+                    return;
+            }
+            result = numArr[i];
+
+        // Pengerjaan operator faktorial
+        } else if (operator == '!') {
+            numArr[i] = factorial(numArr[i]);
+            result = numArr[i];
+
+        // Pengerjaan operator logaritma natural (ln)
+        } else if (operator == 'L') {
+            numArr[i] = log(numArr[i]);
+            result = numArr[i];
+
+        // Pengerjaan operator logaritma basis 10
+        } else if (operator == 'l') {
+            numArr[i] = log10(numArr[i]);
+            result = numArr[i];
+
+        } else {
+            if (scanf(" %lf", &num) != 1) {
+                printf("Invalid input4\n");
+                return;
+            }
+            // Pengerjaan pangkat dan akar
+            if (operator == '^' || operator == 'v') {
+                if (operator == '^'){
+                    numArr[i] = pow(numArr[i], num);
+                    result = numArr[i];
+                } else {
+                    numArr[i] = pow(numArr[i], 1.0/num);
+                    result = numArr[i];
+                }
+            // Saat operator tidak termaksud pilihan yang diatas, operator dan num akan disimpan pada sebuah array
+            } else {
+                ops[i] = operator;
+                numArr[i + 1] = num;
+                i++;
+            }
+        }
+    }
+
+    // Pengerjaan operasi perkalian, pembagia0,n dan modulus
+    for (int i = 0; i < count; i++) {
+        if (ops[i] == '*' || ops[i] == '/' || ops[i] == '%') {
+            if (ops[i] == '*') {
+                numArr[i] *= numArr[i + 1];
+            } else if (ops[i] == '%'){
+                numArr[i] = fmod (numArr[i], numArr[i + 1]);
+            } else  {
+                if (numArr[i + 1] == 0) {
+                    printf("Error: Division by zero\n");
+                    return;
+                }
+                numArr[i] /= numArr[i + 1];
+            }
+            for (int j = i; j < count - 1; j++) {
+                ops[j] = ops[j + 1];
+                numArr[j + 1] = numArr[j + 2];
+            }
+            i--;
+            count--;
+        }
+    }
+
+    // Pengerjaan operasi penjumlahan dan pengurangan
+    result = numArr[0];
+    for (int i = 0; i < count; i++) {
+        if (ops[i] == '+' || ops[i] == '-') {
+            if (ops[i] == '+') {
+                result += numArr[i + 1];
+            } else {
+                result -= numArr[i + 1];
+            }
+        }
+    }
+
+    printf("\nResult = %.2f\n", result);
+    
+    // Pilihan untuk pengulangan atau "home"
+    printf ("\n1. Press q or Q to go again\n2. Press any for 'home'\nEnter your input: ");
+
+    scanf (" %c", &operator);
+    if (operator == 'q' || operator == 'Q'){
+        printf ("\n\n");
+        operation();
+    } else {
+        system("cls");
+        main();
+    }
+    
+}
+
+
+void resultRectangle (){
+    double length, width;
+    printf("Input length: ");
+    scanf("%lf", &length);
+    printf("Input width: ");
+    scanf("%lf", &width);
+
+    double luas = length * width;
+    double keliling = (2 * length) + (2 * width);
+
+    printf("Area: %.2f\nCircumference: %.2f\n", luas, keliling);
+}
+
+void shape() {
+
+    
+    char choice;
+    double base, height, result1, result2, radius, side, base1, base2, diag1, diag2, length, width;
+
+    // pembukaan loop yang akan berjalan selama kondisi terpenuh
+    do {
+    printf("Pick shape dimension:\n1. 2D\n2. 3D\nEnter your input: "); // Pilihan untuk bangun datar atau bangun ruang
+    scanf(" %c", &choice);
+    switch (choice) {
+        case '1':
+            do {
+            printf("Choose shape:\n1. Triangle\n2. Rectangle\n3. Circle\n4. Parallelogram\n5. Trapezoid\n6. Kite\nQ. Back\n"); // Pilihan untuk jenis bangun datar 2D
+            printf("\nEnter your input: ");
+            scanf(" %c", &choice);
+
+            switch (choice) {
+                case '1':
+                    printf("|| TRIANGLE ||\n");
+                    printf("Enter base: ");
+                    if (scanf("%lf", &base) != 1){
+                        printf ("Invalid input");
+                        shape();
+                    }
+                    printf("Enter height: ");
+                    scanf("%lf", &height);
+                    result1 = 0.5 * base * height;
+                    result2 = base + height + sqrt(pow(base, 2) + pow(height, 2));
+                    printf("Area: %.2f\nPerimeter: %.2f\n", result1, result2);
+                     break;
+                case '2':
+                    printf("|| RECTANGLE ||\n");
+                    resultRectangle();
+                    
+                    break;
+
+                case '3':
+                    printf("|| CIRCLE ||\n");
+                    printf("Enter radius: ");
+                    scanf("%lf", &radius);
+                    result1 = 3.14 * pow(radius, 2);
+                    result2 = 2 * 3.14 * radius;
+                    printf("Area: %.2f\nCircumference: %.2f\n", result1, result2);
+                    break;
+                
+                case '4':
+                    printf("|| PARALLELOGRAM ||\n");
+                    printf("Enter the base length: ");
+                    scanf("%lf", &base);
+                    printf("Enter the height: ");
+                    scanf("%lf", &height);
+                    printf("Enter the side length: ");
+                    scanf("%lf", &side);
+                    result1 = base * height;
+                    result2 = 2 * (base + side);
+                    printf("Area: %.2f\nPerimeter: %.2f\n", result1, result2);
+                    break;
+                    
+                case '5':
+                    printf("|| TRAPEZOID ||\n");
+                    printf("Enter the length of the first base: ");
+                    scanf("%lf", &base1);
+                    printf("Enter the length of the second base: ");
+                    scanf("%lf", &base2);
+                    printf("Enter the height: ");
+                    scanf("%lf", &height);
+                    result1 = 0.5 * (base1 + base2) * height;
+                    result2 = base1 + base2 + (2 * height);
+                    printf("Area: %.2f\nPerimeter: %.2f\n", result1, result2);
+                    break;
+                    
+                case '6':
+                    printf("|| KITE ||\n");
+                    printf("Enter the length of the first diagonal: ");
+                    scanf("%lf", &diag1);
+                    printf("Enter the length of the second diagonal: ");
+                    scanf("%lf", &diag2);
+                    result1 = 0.5 * diag1 * diag2;
+                    result2 = 2 * (sqrt(pow(diag1/2, 2) + pow(diag2/2, 2))) + (2 * diag1);
+                    printf("Area: %.2f\nPerimeter: %.2f\n", result1, result2);
+                    break;
+
+                // Kasus pengulangan kalkulasi
+                case 'q':
+                case 'Q':
+                shape();
+                break;
+
+                // Kasus kembali home
+                case 'c':
+                case 'C':
+                system("cls");
+                return;
+                break;
+
+                default:
+                    printf("Invalid choice\n");
+                    break;
+            }
+            printf ("\n- Press q or Q to go again\n- Press any for 'home'\nEnter your input: ");
+                    scanf(" %c", &choice);
+                    if (choice == 'q' || choice == 'Q'){
+                    printf ("\n");
+                    shape();
+                    } else {
+                        main();
+                    }
+                    break;
+            } while (choice != 'q' && choice != 'Q'); //Kondisi loop
+            return;
+
+        case '2':
+            
+            do {
+            printf("Choose shape:\n1. Sphere\n2. Cube\n3. Cylinder\n4. Pyramid\n5. Cone\nQ. Back\n"); // Pilihan untuk jenis bangun datar 3D
+            printf("Enter your input: ");
+            scanf(" %c", &choice);
+
+            switch (choice) {
+                case '1':
+                    printf("|| SPHERE ||\n");
+                    printf("Enter radius: ");
+                    scanf("%lf", &radius);
+                    result1 = (4.0 / 3.0) * 3.14 * pow(radius, 3);
+                    result2 = 4 * 3.14 * pow(radius, 2);
+                    printf("Volume: %.2f\nSurface Area: %.2f\n", result1, result2);
+                    break;
+
+                case '2':
+                    printf("|| CUBE ||\n");
+                    printf("Enter side length: ");
+                    scanf("%lf", &side);
+                    result1 = pow(side, 3);
+                    result2 = 6 * pow(side, 2);
+                    printf("Volume: %.2f\nSurface Area: %.2f\n", result1, result2);
+                    break;
+
+                case '3':
+                    radius, height;
+                    printf("|| CYLINDER ||\n");
+                    printf("Enter radius: ");
+                    scanf("%lf", &radius);
+                    printf("Enter height: ");
+                    scanf("%lf", &height);
+                    result1 = 3.14 * pow(radius, 2) * height;
+                    result2 = (2 * 3.14 * radius * height) + (2 * 3.14 * pow(radius, 2));
+                    printf("Volume: %.2f\nSurface Area: %.2f\n", result1, result2);
+                    break;
+
+                case '4':
+                    length, width, height;
+                    printf("|| PYRAMID ||\n");
+                    printf("Enter base length: ");
+                    scanf("%lf", &length);
+                    printf("Enter base width: ");
+                    scanf("%lf", &width);
+                    printf("Enter height: ");
+                    scanf("%lf", &height);
+                    result1 = (1.0 / 3.0) * length * width * height;
+                    result2 = length * width + length * sqrt(pow(width / 2, 2) + pow(height, 2)) + width * sqrt(pow(length / 2, 2) + pow(height, 2));
+                    printf("Volume: %.2f\nSurface Area: %.2f\n", result1, result2);
+                    break;
+
+                case '5':
+                    radius, height;
+                    printf("|| CONE ||\n");
+                    printf("Enter radius: ");
+                    scanf("%lf", &radius);
+                    printf("Enter height: ");
+                    scanf("%lf", &height);
+                    result1 = (1.0 / 3.0) * 3.14 * pow(radius, 2) * height;
+                    result2 = 3.14 * radius * (radius + sqrt(pow(height, 2) + pow(radius, 2)));
+                    printf("Volume: %.2f\nSurface Area: %.2f\n", result1, result2);
+
+                    break;
+
+                    // Kasus pengulangan kalkulasi
+                    case 'q':
+                    case 'Q':
+                    Message();
+                    return;
+
+                    // Kasus kembali home
+                    case 'h':
+                    case 'H':
+                    main();
+                    break;
+
+                default:
+                    printf("Invalid choice\n");
+                    break;
+            }
+                    printf ("\n- Press q or Q to go again\n- Press any for 'home'\nEnter your input: ");
+                    scanf(" %c", &choice);
+                    if (choice == 'q' || choice == 'Q'){
+                    printf ("\n");
+                    shape();
+                    } else {
+                        main();
+                    }
+                    break;
+            } while (choice != 'q' && choice != 'Q'); // kondisi loop
+            return;
+
+            // Kasus kembali home
+            case 'c':
+            case 'C':
+            system("cls");
+            main();
+            break;
+
+        default:
+            printf("Invalid choice\n");
+            printf("\n");
+            system("cls");
+            Message();
+            return;            
+    }
+    
+    } while (choice != 'q' && choice != 'Q'); // kondisi loop
+}
+
+void Temperature() {
+    // loop fungsi 
+    while (1){
+    printf("\n|| Temperature ||\n");
+    char choice;
+    double temperature;
+
+    // Pemilihan jenis suhu
+    printf("Pick temperature type:\n1. Celsius\n2. Reamur\n3. Fahrenheit\n4. Kelvin\nQ. Back\nH. Home\n");
+    scanf(" %c", &choice);
+
+        switch (choice) {
+            // Konversi pada suhu celcius
+            case '1':
+                printf("\nEnter temperature: \n");
+                scanf(" %lf", &temperature);
+                printf("Choose conversion:\n1. Reamur\n2. Fahrenheit\n3. Kelvin\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Temperature is: %.2f R\n", temperature * 4 / 5);
+                        break;
+                    case '2':
+                        printf("Temperature is: %.2f F\n", temperature * 9 / 5 + 32);
+                        break;
+                    case '3':
+                        printf("Temperature is: %.2f K\n", temperature + 273);
+                        break;
+                    // kasus mundur
+                    case 'q':
+                    case 'Q':
+                        continue;
+
+                    // kasus kembali "home"
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+
+                    // Kasus input tidak valid
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            // Konversi pada suhu reamur
+            case '2':
+                printf("Enter temperature: \n");
+                scanf(" %lf", &temperature);
+                printf("Choose conversion:\n1. Celsius\n2. Fahrenheit\n3. Kelvin\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Temperature is: %.2f C\n", temperature * 5 / 4);
+                        break;
+                    case '2':
+                        printf("Temperature is: %.2f F\n", temperature * 9 / 4 + 32);
+                        break;
+                    case '3':
+                        printf("Temperature is: %.2f K\n", temperature * 5 / 4 + 273);
+                        break;
+
+                    // kasus mundur
+                    case 'q':
+                    case 'Q':
+                        continue;
+
+                    // kasus kembali "home"
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+
+                    // Kasus input tidak valid
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            // Konversi pada suhu farenheit
+            case '3':
+                printf("Enter temperature: \n");
+                scanf(" %lf", &temperature);
+                printf("Choose conversion:\n1. Celsius\n2. Reamur\n3. Kelvin\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Temperature is: %.2f C\n", (temperature - 32) * 5 / 9);
+                        break;
+                    case '2':
+                        printf("Temperature is: %.2f R\n", (temperature - 32) * 4 / 9);
+                        break;
+                    case '3':
+                        printf("Temperature is: %.2f K\n", (temperature - 32) * 5 / 9 + 273);
+                        break;
+
+                    // kasus mundur
+                    case 'q':
+                    case 'Q':
+                        continue;
+
+                    // kasus kembali "home"
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+
+                    // Kasus input tidak valid
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            // Konversi pada suhu kelvin
+            case '4':
+                printf("Enter temperature: \n");
+                scanf(" %lf", &temperature);
+                printf("Choose conversion:\n1. Celsius\n2. Reamur\n3. Fahrenheit\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Temperature is: %.2f C\n", temperature - 273);
+                        break;
+                    case '2':
+                        printf("Temperature is: %.2f R\n", (temperature - 273) * 4 / 5);
+                        break;
+                    case '3':
+                        printf("Temperature is: %.2f F\n", (temperature - 273) * 9 / 5 + 32);
+                        break;
+
+                    // kasus mundur
+                    case 'q':
+                    case 'Q':
+                        continue;
+
+                    // kasus kembali "home"
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    
+                    // Kasus input tidak valid
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+             // kasus mundur
+            case 'q':
+            case 'Q':
+                return;
+
+            // kasus kembali "home"
+            case 'h':
+            case 'H':
+                system("cls");
+                main();
+                break;
+
+            // Kasus input tidak valid
+            default:
+                printf("\n|| ERROR INVALID INPUT ||\n");
+                break;
+        } 
+
+        // Kasus pemilihan untuk pengulangan atau kembali "hpme"
+        printf ("\n1. Press q or Q to go again\n2. Press any for 'home'\nEnter your input: ");
+        scanf (" %c", &choice);
+        if (choice == 'q' || choice == 'Q'){
+            system("cls");
+            Temperature();
+        } else {
+                system("cls");
+                main(); 
+        }
+    }
+    
+}
+
+
+double convertToGrams(double weight, int choice) {
+    switch (choice) {
+        case 1:
+            return weight * 28.34952;
+
+        case 2:
+            return weight * 453.5924;
+
+        case 3:
+            return weight * 6350.293;
+
+        case 4:
+            return weight * 0.001;
+
+        case 5:
+            return weight;
+
+        case 6:
+            return weight * 100;
+
+        case 7:
+            return weight * 1000;
+
+        case 8:
+            return weight * 1000000;
+    }
+}
+
+double convertFromGrams(double weight) {
+    char choice;
+
+    // Pemilihan konversi yang akan dilakukan
+    printf("\nChoose conversion system:\n1. U.S. Units\n2. Metric Units\n");
+    scanf(" %c", &choice);
+    
+    switch (choice) {
+        case '1':
+            printf("\n|| U.S. Units ||\n");
+            printf("Choose weight unit:\n1. Ounces\n2. Pounds\n3. Stones\nChoose option: ");
+            scanf(" %c", &choice);
+            printf("\n");
+
+            switch (choice) {
+                case '1':
+                    printf("Result = %.2foz", weight / 28.34952);
+                    break;
+                case '2':
+                    printf("Result = %.2flbs", weight / 453.5924);
+                    break;
+                case '3':
+                    printf("Result = %.2fst", weight / 6350.293);
+                    break;
+                default:
+                    printf("Invalid");
+                    break;
+            }
+            break;
+
+        case '2':
+            printf("\n|| Metric Units ||\n");
+            printf("Choose weight unit:\n1. Milligrams\n2. Grams\n3. Hectograms\n4. Kilograms\n5. Tonnes\nChoose option: ");
+            scanf(" %c", &choice);
+            printf("\n");
+
+            switch (choice) {
+                case '1':
+                    printf("Result = %.2fmg", weight / 0.001);
+                    break;
+                case '2':
+                    printf("Result = %.2fg", weight);
+                    break;
+                case '3':
+                    printf("Result = %.2fhg", weight / 100);
+                    break;
+                case '4':
+                    printf("Result = %.2fkg", weight / 1000);
+                    break;
+                case '5':
+                    printf("Result = %.2ft", weight / 1000000);
+                    break;
+                default:
+                    printf("Invalid");
+                    break;
+            }
+            break;
+
+        // kasus kembali home
+        case 'h':
+        case 'H':
+            system("cls");
+            main();
+            break;
+
+        default:
+            printf("\n|| ERROR INVALID INPUT ||\n");
+            break;
+    }
+
+    return weight;
+}
+
+
+void Weight() {
+    char choice;
+    char choiceNum;
+    double weight;
+    
+    do {
+        printf("\n|| Weight ||\n");
+        printf("Enter Weight: ");
+        scanf("%lf", &weight);
+        printf("Choose weight system:\n1. U.S. Units\n2. Metric Units\nQ. Back\nH. Home\nChoose option: ");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case '1':
+                printf("\n|| U.S. Units ||\n");
+                printf("Choose weight unit:\n1. Ounces\n2. Pounds\n3. Stones\nQ. Back\nH. Home\nChoose option: ");
+                scanf(" %c", &choice);
+                printf("\n");
+
+                switch (choice) {
+                    case '1':
+                        printf("Current weight:\n%.2foz", weight);
+                        choiceNum = 1;
+                        break;
+                    case '2':
+                        printf("Current weight:\n%.2flbs", weight);
+                        choiceNum = 2;
+                        break;
+                    case '3':
+                        printf("Current weight:\n%.2fst", weight);
+                        choiceNum = 3;
+                        break;
+
+                    case 'q':
+                    case 'Q':
+                        continue;
+                        break;
+
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case '2':
+                printf("\n|| Metric Units ||\n");
+                printf("Choose weight unit:\n1. Milligrams\n2. Grams\n3. Hectograms\n4. Kilograms\n5. Tonnes\nQ. Back\nH. Home\nChoose option: ");
+                scanf(" %c", &choice);
+                printf("\n");
+
+                switch (choice) {
+                    case '1':
+                        printf("Current weight:\n%.2fmg", weight);
+                        choiceNum = 4;
+                        break;
+                    case '2':
+                        printf("Current weight:\n%.2fg", weight);
+                        choiceNum = 5;
+                        break;
+                    case '3':
+                        printf("Current weight:\n%.2fhg", weight);
+                        choiceNum = 6;
+                        break;
+                    case '4':
+                        printf("Current weight:\n%.2fkg", weight);
+                        choiceNum = 7;
+                        break;
+                    case '5':
+                        printf("Current weight:\n%.2ft", weight);
+                        choiceNum = 8;
+                        break;
+
+                    case 'q':
+                    case 'Q':
+                        continue;
+                        break;
+
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case 'q':
+            case 'Q':
+                return;
+
+            case 'h':
+            case 'H':
+                system("cls");
+                main();
+                break;
+
+            default:
+                printf("\n|| ERROR INVALID INPUT ||\n");
+                break;
+        }
+
+        weight = convertToGrams(weight, choiceNum);
+        convertFromGrams(weight);
+
+    } while (choice != 'q' && choice != 'Q');
+
+    printf("\n1. Press q or Q to go again\n2. Press any key for 'home'\nEnter your input: ");
+    scanf(" %c", &choice);
+    if (choice == 'q' || choice == 'Q') {
+        system("cls");
+        Weight();
+    } else {
+        system("cls");
+        main();
+    }
+}
+
+double convertToMetres(double length, int choice){
+  
+    switch (choice){
+            case 1:
+                return length * 39.37008;
+                break;
+            case 2:
+                return length * 3.28084;
+                break;
+            case 3:
+                return length * 1.093613;
+                break;
+            case 4:
+                return length * 0.000621;
+                break;
+            case 5:
+                return length * 0.001;
+                break;
+            case 6:
+                return length * 0.01;
+                break;
+            case 7:
+                return length;
+                break;
+            case 8:
+                return length * 100;
+                break;
+            case 9:
+              return length * 1000;
+
+    }
+}
+
+double convertFromMetres(double length){
+char choice;
+    printf("\nChoose coversion system:\n1. U.S. Units\n2. Metric Units\n");
+    scanf (" %c", &choice);
+    switch (choice) {
+            case '1':
+                printf("\n|| U.S. Units ||\n");
+                printf("Choose length unit:\n1. Inches\n2. Feet\n3. Yards\n4. Miles\nChoose option: ");
+                scanf(" %c", &choice);
+                printf("\n");
+
+                switch (choice) {
+                    case '1':
+                        printf("Result = %.2fin", length / 28.34952);
+                        break;
+                    case '2':
+                        printf("Result = %.2fft", length / 453.5924);
+                        break;
+                    case '3':
+                        printf("Result = %.2fyd", length / 6350.293);
+                        break;
+                    case '4':
+                        printf("Result = %.2fmi", length / 6350.293);
+                        break;
+                    default:
+                        printf("Invalid");
+                        break;
+                }
+                break;
+                        
+            case '2':
+                printf("\n|| Metric Units ||\n");
+                printf("Choose length unit:\n1. Millimetres\n2. Centimeters\n3. Meters\n4. Hectometres\n5. Kilometres\nChoose option: ");
+                scanf("%d", &choice);
+                printf ("\n");
+                switch (choice) {
+                    case '1':
+                        printf("Result = %.2fmm", length / 0.001);
+                        break;
+                    case '2':
+                        printf("Result = %.2fcm", length / 0.01);
+                        break;
+                    case '3':
+                        printf("Result = %.2fm", length);
+                        break;
+                    case '4':
+                        printf("Result = %.2fhm", length / 100);
+                        break;
+                    case '5':
+                        printf("Result = %.2fkm", length / 1000);
+                        break;
+                    default:
+                        printf("Invalid");
+                        break;
+                    }
+                break;
+                        
+            case 'h':
+            case 'H':
+                system("cls");
+                main();
+                break;
+
+            default:
+                printf("\n|| ERROR INVALID INPUT ||\n");
+                break;
+    }       
+    printf ("\n");
+
+}
+
+void Length() {
+    char choice;
+    double length;
+    int choiceNum;
+
+    do {
+        printf("\n|| Length ||\n");
+        printf("Enter length: ");
+        scanf("%lf", &length);
+        printf("Choose length system:\n1. U.S. Units\n2. Metric Units\nQ. Back\nH. Home\nChoose option: ");
+        scanf(" %c", &choice);
+        
+
+        switch (choice) {
+            case '1':
+                printf("\n|| U.S. Units ||\n");
+                printf("Choose length unit:\n1. Inches\n2. Feet\n3. Yards\n4. Miles\nQ. Back\nH. Home\nChoose option: ");
+                scanf(" %c", &choice);
+                printf("\n");
+
+                switch (choice) {
+                    case '1':
+                        printf("Current length:\n%.2finc", length);
+                        choiceNum = 1;
+                        break;
+                    case '2':
+                        printf("Current length:\n%.2fft", length);
+                        choiceNum = 2;                    
+                        break;
+                    case '3':
+                        printf("Current length:\n%.2fyd", length);
+                        choiceNum = 3;
+                        break;
+                    case '4':
+                        printf("Current length:\n%.2fmi", length);
+                        choiceNum = 4;
+                        break;
+                    case 'q':
+                    case 'Q':
+                        continue;
+                        break;
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case '2':
+                printf("\n|| Metric Units ||\n");
+                printf("Choose length unit:\n1. Millimetres\n2. Centimeters\n3. Meters\n4. Hectometres\n5. Kilometres\nQ. Back\nH. Home\nChoose option: ");
+                scanf(" %c", &choice);
+                printf("\n");
+                switch (choice) {
+                    case '1':
+                        printf("Current length:\n%.2fmm", length);
+                        choiceNum = 5;
+                        break;
+                    case '2':
+                        printf("Current length:\n%.2fcm", length);
+                        choiceNum = 6;
+                        break;
+                    case '3':
+                        printf("Current length:\n%.2fm", length);
+                        choiceNum = 7;
+                        break;
+                    case '4':
+                        printf("Current length:\n%.2fhm", length);
+                        choiceNum = 8;
+                        break;
+                    case '5':
+                        printf("Current length:\n%.2fkm", length);
+                        choiceNum = 9;
+                        break;
+                    case 'q':
+                    case 'Q':
+                        continue;
+                        break;
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case 'q':
+            case 'Q':
+                return;
+
+            case 'c':
+            case 'C':
+                system("cls");
+                main();
+                break;
+
+            default:
+                printf("\n|| ERROR INVALID INPUT ||\n");
+                break;
+        }
+       
+        length = convertToMetres(length, choiceNum);
+        convertFromMetres(length);
+
+    
+
+    printf("\n1. Press q or Q to go again\n2. Press any key for 'home'\nEnter your input: ");
+    scanf(" %c", &choice);
+    if (choice == 'q' || choice == 'Q') {
+        system("cls");
+        Length();
+    } else {
+        system("cls");
+        main();
+    }
+    } while (choice != 'q' && choice != 'Q');
+}
+
+
+void Angle() {
+    while (1) {
+        printf("\n|| Angle ||\n");
+        char choice;
+        double angle;
+        printf("Choose angle type:\n1. Degrees\n2. Radians\n3. Gradians\nQ. Back\nH. Home\n");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case '1':
+                printf("Enter angle: ");
+                scanf("%lf", &angle);
+                printf("Choose conversion:\n1. Radians\n2. Gradians\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Angle is: %.2f Radians\n", angle * 0.017453);
+                        break;
+                    case '2':
+                        printf("Angle is: %.2f Gradians\n", angle * 1.111111);
+                        break;
+                    case 'q':
+                    case 'Q':
+                        continue;
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case '2':
+                printf("Enter angle: ");
+                scanf("%lf", &angle);
+                printf("Choose conversion:\n1. Degrees\n2. Gradians\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Angle is: %.2f Degrees\n", angle * 57.29578);
+                        break;
+                    case '2':
+                        printf("Angle is: %.2f Gradians\n", angle * 63.66198);
+                        break;
+                    case 'q':
+                    case 'Q':
+                        continue;
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case '3':
+                printf("Enter angle: ");
+                scanf("%lf", &angle);
+                printf("Choose conversion:\n1. Degrees\n2. Radians\nQ. Back\nH. Home\n");
+                scanf(" %c", &choice);
+                switch (choice) {
+                    case '1':
+                        printf("Angle is: %.2f Degrees\n", angle * 0.9);
+                        break;
+                    case '2':
+                        printf("Angle is: %.2f Radians\n", angle * 0.02);
+                        break;
+                    case 'q':
+                    case 'Q':
+                        continue;
+                    case 'h':
+                    case 'H':
+                        system("cls");
+                        main();
+                        break;
+                    default:
+                        printf("\n|| ERROR INVALID INPUT ||\n");
+                        break;
+                }
+                break;
+
+            case 'q':
+            case 'Q':
+                return;
+
+            case 'h':
+            case 'H':
+                system("cls");
+                main();
+                break;
+
+            default:
+                printf("\n|| ERROR INVALID INPUT ||\n");
+                break;
+        }
+
+        printf("\n1. Press q or Q to go again\n2. Press any key for 'home'\nEnter your input: ");
+            scanf(" %c", &choice);
+            if (choice == 'q' || choice == 'Q') {
+                system("cls");
+                Angle();
+            } else {
+                system("cls");
+                main();
+            }        
+    }
+}
+
+void currency (){
+  char choice;
+  double money;
+  do {
+    
+  printf ("|| Currency ||\n");
+  printf ("Choose currency:\n1. Rupiah\n2. US Dollars\n3. Euro\n4. Yen\n5. Sterling\nChoose Option: ");
+  scanf (" %c", &choice);
+  printf ("Enter nominal money: ");
+  scanf ("%lf", &money);
+
+  switch (choice){
+
+    case '1':
+    do {
+      printf ("\n|| Rupiah ||\n");
+      printf ("Choose conversion:\n1. US Dollars\n2. Euro\n3. Yen\n4. Sterling\nChoose Option: ");
+      scanf (" %c", &choice);
+      printf ("\n");
+
+      switch (choice){
+        case '1':
+          printf ("US $%.2f", money * 0.00006739);
+          break;
+
+        case '2':
+          printf ("3%.2f", money * 0.00005813);
+          break;
+
+        case '3':
+          printf ("Y%.2f", money * 0.00740869);
+          break;
+
+        case '4':
+          printf ("E%.2f", money * 0.00004762);
+          break;
+
+        case 'q':
+        case 'Q':
+        return;
+
+        default:
+          printf("Invalid option!");
+          break;
+      }
+    }while (choice != 'Q' && choice != 'q');
+
+      break;
+
+    case '2':
+    do {
+      printf ("\n|| US Dollars ||\n");
+      printf ("Choose conversion:\n1. Rupiah\n2. Euro\n3. Yen\n4. Sterling\nChoose Option: ");
+      scanf (" %c", &choice);
+      printf ("\n");
+
+      switch (choice){
+        case '1':
+          printf ("Rp.%.2f,00", money * 14821.70);
+          break;
+
+        case '2':
+          printf ("3%.2f", money * 0.858769);
+          break;
+
+        case '3':
+          printf ("Y%.2f", money * 110.78);
+          break;
+
+        case '4':
+          printf ("E%.2f", money * 0.722421);
+          break;
+
+        case 'q':
+        case 'Q':
+        return;
+
+        default:
+          printf("Invalid option!");
+          break;
+      }
+    }while (choice != 'Q' && choice != 'q');
+
+      break;
+
+    case '3':
+    do {
+        printf ("\n|| Euro ||\n");
+        printf ("Choose conversion:\n1. Rupiah\n2. US Dollars\n3. Euro\n4. Sterling\nChoose Option: ");
+        scanf (" %c", &choice);
+        printf ("\n");
+
+        switch (choice){
+          case '1':
+            printf ("Rp.%.2f,00", money * 16406.8546);
+            break;
+
+          case '2':
+            printf ("US $%.2f", money * 1.1056);
+            break;
+
+          case '3':
+            printf ("Y%.2f", money * 148.325);
+            break;
+
+          case '4':
+            printf ("E%.2f", money * 0.868809730);
+            break;
+
+            case 'q':
+        case 'Q':
+        return;
+
+          default:
+            printf("Invalid option!");
+            break;
+        }
+    }while (choice != 'Q' && choice != 'q');
+
+        break;
+
+    case '4':
+    do {
+      printf ("\n|| Yen ||\n");
+      printf ("Choose conversion:\n1. Rupiah\n2. US Dollars\n3. Euro\n4. Sterling\nChoose Option: ");
+      scanf (" %c", &choice);
+      printf ("\n");
+
+      switch (choice){
+        case '1':
+          printf ("Rp.%.2f,00", money * 110.6142);
+          break;
+
+        case '2':
+          printf ("US $%.2f", money * 0.007454);
+          break;
+
+        case '3':
+          printf ("3%.2f", money * 0.006742);
+          break;
+
+        case '4':
+          printf ("E%.2f", money * 0.000005827845);
+          break;
+          
+          case 'q':
+        case 'Q':
+        return;
+
+        default:
+          printf("Invalid option!");
+          break;
+      }
+    } while (choice != 'Q' && choice != 'q');
+
+        break;
+
+      case '5':
+
+      do {
+    printf ("\n|| Sterling ||\n");
+    printf ("Choose conversion:\n1. Rupiah\n2. US Dollars\n3. Euro\n4. Yen\nChoose Option: ");
+    scanf (" %c", &choice);
+    printf ("\n");
+
+    switch (choice){
+      case '1':
+        printf ("Rp.%.2f,00", money * 110.6142);
+        break;
+
+      case '2':
+        printf ("US $%.2f", money * 0.007454);
+        break;
+
+      case '3':
+        printf ("Euro %.2f", money * 0.006742);
+        break;
+
+      case '4':
+        printf ("Yen %.2f", money * 171712.48);
+        break;
+
+        case 'q':
+        case 'Q':
+        return;
+
+      default:
+        printf("Invalid option!");
+        break;
+    }
+    } while (choice != 'Q' && choice != 'q');
+    break;
+
+        case 'q':
+        case 'Q':
+        
+        break;
+
+  default:
+    printf("Invalid option!");
+    break;
+}
+  }while (choice != 'Q' && choice != 'q');
+}
+
+void conversion_message(){
+    printf ("\n|| Coversion ||\n");
+    printf ("Choose Coversion Type:\n1. Temperature\n2. Weight\n3. Length\n4. Currency\n5. Angle\nQ. Back\nH. Home\nChoose option: ");
+}
+
+void conversion (){
+  char choice;
+
+  do {
+    conversion_message();
+    scanf (" %c", &choice);
+    switch (choice){
+
+        case '1': 
+        Temperature();
+        break;
+
+        case '2':
+        Weight();
+        break;
+
+        case '3':
+        Length();
+        break;
+
+        case '4':
+        currency();  
+        break;
+
+        case '5':
+        Angle();
+        break;
+
+        case 'q':
+        case 'Q':
+        printf("\n");
+        Message();
+        return;
+
+        case 'h':
+        case 'H':
+        system("cls");
+        main();
+        break;
+
+        default:
+        printf("Invalid");
+        break;
+
+    }
+  } while (choice != 'Q' && choice != 'q');
+
+}
+Matrix matrixMultiplication(Matrix matrix1, Matrix matrix2, int rows, int colls){
+    int i, j, k;
+    Matrix result = {0};
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < colls; j++) {
+            for (k = 0; k < colls; k++) {
+                result.matrix[i][j] += matrix1.matrix[i][k] * matrix2.matrix[k][j];
+            } 
+        } 
+    }
+    return result;
+}
+
+Matrix matrixDivision(Matrix matrix1, Matrix matrix2, int rows, int colls){
+    int i, j, k;
+    Matrix result = {0};
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < colls; j++) {
+            if (matrix2.matrix[i][j] == 0) {
+                printf("Error: Division by zero\n");
+                return result;
+            }
+            result.matrix[i][j] = matrix1.matrix[i][j] / matrix2.matrix[i][j];
+        } 
+    }
+    return result;
+}
+
+Matrix matrixExponents(Matrix matrix1, int rows, int colls, int expo){
+    int h, i, j, k;
+    Matrix result;
+    
+    // Initialize result matrix as identity matrix
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < colls; j++) {
+            if (i == j) {
+                result.matrix[i][j] = 1.0;
+            } else {
+                result.matrix[i][j] = 0.0;
+            }
+        }
+    }
+    
+    // Perform matrix exponentiation
+    for (h = 0; h < expo; h++) {
+        Matrix temp = result; // Create a temporary matrix to store the current result
+        
+        for (i = 0; i < rows; i++) {
+            for (j = 0; j < colls; j++) {
+                double sum = 0.0;
+                for (k = 0; k < colls; k++) {
+                    sum += temp.matrix[i][k] * matrix1.matrix[k][j];
+                }
+                result.matrix[i][j] = sum;
+            }
+        }
+    }
+    
+    return result;
+}
+
+void matrix() {
+
+    do {
+    char operator;
+    Matrix result = {0}, matrixNum;
+    int i = 0, count = 0, rows, colls, expo;
+    Matrix matrixArr[10];
+    char ops[100];
+    printf("|| MATRIX OPERATION ||\n");
+    
+    printf("Enter the number of rows in the matrices: ");
+    scanf("%d", &rows);
+    printf("Enter the number of columns in the matrices: ");
+    scanf("%d", &colls);
+    
+    printf("Enter calculation:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < colls; j++) {
+            if (scanf("%lf", &matrixArr[0].matrix[i][j]) != 1){
+                printf("Invalid input\n");
+                return;
+            }
+        }
+    }
+    
+    while (scanf(" %c", &operator) == 1 && operator != '=') {
+        count++;
+        // prioritize power and root operations
+        if (operator == '^') {
+            if (scanf ("%d", &expo) != 1){
+                printf("Invalid input\n");
+                return;
+            }
+            matrixArr[i] = matrixExponents(matrixArr[i], rows, colls, expo);
+            result = matrixArr[i];
+        } else {
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < colls; j++) {
+                    if (scanf("%lf", &matrixNum.matrix[i][j]) != 1){
+                        printf("Invalid input\n");
+                        return;
+                    }
+                }
+            }
+            ops[i] = operator;
+            matrixArr[i + 1] = matrixNum;
+            i++;
+        }
+    }
+    
+    for (int i = 0; i < count; i++) {
+        if (ops[i] == '*' || ops[i] == '/') {
+            
+            if (ops[i] == '*') {
+                matrixArr[i] = matrixMultiplication(matrixArr[i], matrixArr[i + 1], rows, colls);
+            } else if (ops[i] == '/') {
+                matrixArr[i] = matrixDivision(matrixArr[i], matrixArr[i + 1], rows, colls);
+            }
+            for (int j = i; j < count - 1; j++) {
+                ops[j] = ops[j + 1];
+                matrixArr[j + 1] = matrixArr[j + 2];
+            }
+            i--;
+            count--;
+        }
+    }
+    
+    result = matrixArr[0];
+    for (int i = 0; i < count; i++) {
+        if (ops[i] == '+' || ops[i] == '-') {
+            for (int j = 0; j < rows; j++){
+                for (int k = 0; k < colls; k++){
+                    if (ops[i] == '+') {
+                        result.matrix[j][k] += matrixArr[i + 1].matrix[j][k];
+                    } else {
+                        result.matrix[j][k] -= matrixArr[i + 1].matrix[j][k];
+                    }
+                }
+            }
+        }
+    }
+    
+    printf("Result:\n");
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < colls; j++) {
+            printf("%.2lf ", result.matrix[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf ("\n1. Press q or Q to go again\n2. Press any for 'home'\nEnter your input: ");
+
+    scanf (" %c", &operator);
+    if (operator == 'q' && operator == 'Q'){
+        continue;
+    } else {
+        system("cls");
+        main();
+    }
+    } while (1);
+    
+}
